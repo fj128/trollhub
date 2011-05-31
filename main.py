@@ -14,6 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+from google.appengine.dist import use_library
+use_library('django', '1.2')
 
 import logging
 import os
@@ -30,9 +32,15 @@ _DEBUG = True
 
 class FrontPageHandler(webapp.RequestHandler):
     def get(self):
-        vars = {}
-        # template_file = os.path.join(os.path.dirname(__file__), 'templates', 'frontpage.html')
-        rendered = webapp.template.render('templates/frontpage.html', vars, debug=_DEBUG)
+        user = users.get_current_user()
+        if user:
+            vars = {'user': user,
+                    'logout_url': users.create_logout_url('/'),
+                    }
+        else:
+            vars = {'login_url': users.create_login_url(self.request.uri),
+                    }
+        rendered = webapp.template.render('templates/yhbt.html', vars, debug=_DEBUG)
         self.response.out.write(rendered)
 
 def main():

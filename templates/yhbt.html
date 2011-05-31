@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<style>
+html,body {height:100%;padding:0;margin:0;}
+</style>
+<head>
+<link href="/static/favicon.ico" rel="icon" type="image/x-icon" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>Trollhub</title>
+<body>
+ <table style="border:none;width:100%;height:100%">
+  <tr>
+   <td align=right height=1px>
+    {% if user %}
+      <span class="username">{{ user.nickname }}</span>
+      (<a href="{{ logout_url }}">log out</a>)
+    {% else %}
+      <a href="{{ login_url }}">log in</a>
+    {% endif %}
+   </td>
+  </tr>
+  <tr>
+   <td align=center height=auto><div style="font-size:72px">YHBT<div></td>
+  </tr>
+ </table>
+</body>
+</html>
+
+ 

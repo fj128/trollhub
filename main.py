@@ -27,6 +27,8 @@ from google.appengine.ext import db
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import template
 
+import testloader
+
 # Set to True if stack traces should be shown in the browser, etc.
 _DEBUG = True
 
@@ -40,13 +42,16 @@ class FrontPageHandler(webapp.RequestHandler):
         else:
             vars = {'login_url': users.create_login_url(self.request.uri),
                     }
+        vars['text'] = testloader.main()
         rendered = webapp.template.render('templates/yhbt.html', vars, debug=_DEBUG)
         self.response.out.write(rendered)
 
 def main():
-    application = webapp.WSGIApplication(
-        [('/', FrontPageHandler)],
-        debug=_DEBUG)
+    application = webapp.WSGIApplication([
+            ('/', FrontPageHandler),
+#            ('/_ah/xmpp/message/chat/', XMPPHandler),
+            ],
+            debug=_DEBUG)
     wsgiref.handlers.CGIHandler().run(application)
     
 if __name__ == '__main__':
